@@ -26,6 +26,168 @@ The [Enterprise AI Gateway](../enterprise-ai-gateway/) platform logs every LLM c
 
 ---
 
+## UI Tour
+
+> ASCII mockups of all six dashboard views — built with React 18 + TypeScript + Tailwind CSS + Recharts.
+
+### Login Page
+
+```
+┌──────────────────────────────────────────────────────────────────────┐
+│                                                                      │
+│                   ╔═══════════════════════════╗                      │
+│                   ║  🧠 Enterprise AI Monitor  ║                      │
+│                   ║   Admin & Analytics        ║                      │
+│                   ╠═══════════════════════════╣                      │
+│                   ║                           ║                      │
+│                   ║  Work Email               ║                      │
+│                   ║  ┌───────────────────┐    ║                      │
+│                   ║  │ admin@company.com │    ║                      │
+│                   ║  └───────────────────┘    ║                      │
+│                   ║                           ║                      │
+│                   ║  Password                 ║                      │
+│                   ║  ┌───────────────────┐    ║                      │
+│                   ║  │ ●●●●●●●●●●●●     │    ║                      │
+│                   ║  └───────────────────┘    ║                      │
+│                   ║                           ║                      │
+│                   ║  [ Sign In → ]            ║                      │
+│                   ║  Requires admin role      ║                      │
+│                   ╚═══════════════════════════╝                      │
+│                                                                      │
+└──────────────────────────────────────────────────────────────────────┘
+  Same JWT credentials as Enterprise AI Gateway  ·  Auto-redirect to /
+```
+
+---
+
+### Overview Page (`/`) — Morning Check-In
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ■ AI Monitor  │  Overview                                  [ 7d  30d  90d ] │
+│───────────────┼─────────────────────────────────────────────────────────────│
+│  📊 Overview  │                                                             │
+│  👥 By Team   │  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐    │
+│  👤 By User   │  │ Total Spend   │ │  API Calls    │ │   Tokens      │    │
+│  🤖 By Model  │  │   $142.37     │ │    8,291      │ │    14.2M      │    │
+│  🛡️  Budget    │  │ 30-day period │ │ 30-day period │ │ 30-day period │    │
+│  📋 Weekly    │  └───────────────┘ └───────────────┘ └───────────────┘    │
+│               │                                                             │
+│               │  ┌── Daily Spend — Last 30 days (USD) ─────────────────┐  │
+│               │  │  $8 ┤                 ╭──╮                          │  │
+│               │  │  $6 ┤           ╭─╮ ╭╯  ╰──╮                       │  │
+│               │  │  $4 ┤   ╭──╮  ╭─╯ ╰─╯      ╰╮                     │  │
+│               │  │  $2 ┤───╯  ╰──╯               ╰────                │  │
+│               │  │  $0 └──────────────────────────────────────────     │  │
+│               │  │      Nov 1   Nov 7  Nov 14  Nov 21  Nov 24          │  │
+│               │  │      ── Spend (USD)   ╌╌ API Calls                  │  │
+│               │  └─────────────────────────────────────────────────────┘  │
+│               │                                                             │
+│               │  Team Summary                                               │
+│               │  ───────────────────────────────────────────────────────   │
+│               │  Engineering    3,241   6.1M   $71.20   gpt-4o            │
+│               │  HR             2,180   4.3M   $38.90   claude-sonnet     │
+│               │  Logistics      1,920   2.8M   $22.47   gpt-4o-mini       │
+│               │  C-Suite          950   1.0M    $9.80   claude-opus       │
+└───────────────┴─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### Cost by Team (`/by-team`) — Spend vs. Budget
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ■ AI Monitor  │  Cost by Team                              [ 7d  30d  90d ] │
+│───────────────┼─────────────────────────────────────────────────────────────│
+│  📊 Overview  │  ┌── Spend by Department (USD) ─────────────────────────┐  │
+│  👥 By Team   │  │  $80 ┤                                               │  │
+│  👤 By User   │  │  $60 ┤        ████                                   │  │
+│  🤖 By Model  │  │  $40 ┤  ████  ████  ████                             │  │
+│  🛡️  Budget    │  │  $20 ┤  ████  ████  ████  ████                       │  │
+│  📋 Weekly    │  │      └────────────────────────────────────────       │  │
+│               │  │       Engineering  HR  Logistics  C-Suite            │  │
+│               │  └──────────────────────────────────────────────────────┘  │
+│               │                                                             │
+│               │  Team         Calls    Tokens    Spend    Budget  Remaining Status │
+│               │  ──────────────────────────────────────────────────────────────── │
+│               │  Engineering  3,241    6.1M     $71.20   $500     $428.80  🟢 14% │
+│               │  HR           2,180    4.3M     $38.90   $200     $161.10  🟢 19% │
+│               │  Logistics    1,920    2.8M     $22.47   $150     $127.53  🟢 15% │
+│               │  C-Suite        950    1.0M      $9.80   $300     $290.20  🟢  3% │
+└───────────────┴─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### Budget Status (`/budget`) — Traffic-Light Alerts
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ■ AI Monitor  │  Budget Status  — refreshes every 5 minutes               │
+│───────────────┼─────────────────────────────────────────────────────────────│
+│  📊 Overview  │  ┌─── ⚠️  Warning ──────────────────────────────────────┐  │
+│  👥 By Team   │  │  1 team between 70–90% budget used                  │  │
+│  👤 By User   │  │  Logistics — monitor closely this week              │  │
+│  🤖 By Model  │  └──────────────────────────────────────────────────────┘  │
+│  🛡️  Budget    │                                                             │
+│  📋 Weekly    │  ┌── Engineering ──────┐  ┌── HR ───────────────────┐     │
+│               │  │ 🟢 On track · 14%   │  │ 🟢 On track · 19%       │     │
+│               │  │ ██░░░░░░░░░░░░░░░   │  │ ███░░░░░░░░░░░░░░░░░    │     │
+│               │  │ Spent:    $71.20    │  │ Spent:    $38.90        │     │
+│               │  │ Remaining:$428.80  │  │ Remaining:$161.10       │     │
+│               │  │ Budget:   $500/mo   │  │ Budget:   $200/mo       │     │
+│               │  └────────────────────┘  └─────────────────────────┘     │
+│               │                                                             │
+│               │  ┌── Logistics ────────┐  ┌── C-Suite ──────────────┐     │
+│               │  │ 🟡 Warning · 75%    │  │ 🟢 On track · 3%        │     │
+│               │  │ ████████████░░░░░   │  │ █░░░░░░░░░░░░░░░░░░░    │     │
+│               │  │ Spent:    $112.50   │  │ Spent:     $9.80        │     │
+│               │  │ Remaining: $37.50  │  │ Remaining:$290.20       │     │
+│               │  │ Budget:   $150/mo   │  │ Budget:   $300/mo       │     │
+│               │  └────────────────────┘  └─────────────────────────┘     │
+└───────────────┴─────────────────────────────────────────────────────────────┘
+  Green < 70%  ·  Amber 70–90%  ·  Red > 90%  ·  Live refresh every 5 min
+```
+
+---
+
+### Weekly Report (`/weekly-report`) — Leadership Summary
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ■ AI Monitor  │  Weekly Report                   [ 🖨️  Print / Save as PDF ] │
+│───────────────┼─────────────────────────────────────────────────────────────│
+│  📊 Overview  │  ╔═══════════════════════════════════════════════════════╗  │
+│  👥 By Team   │  ║  Enterprise AI Platform — Weekly Summary             ║  │
+│  👤 By User   │  ║  Report generated: November 24, 2026 · Last 7 days   ║  │
+│  🤖 By Model  │  ╠═══════════════════════════════════════════════════════╣  │
+│  🛡️  Budget    │  ║  This Week at a Glance                              ║  │
+│  📋 Weekly    │  ║  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ║  │
+│               │  ║  │  $38.72      │ │   2,104      │ │      4       │ ║  │
+│               │  ║  │ Total Spend  │ │  API Calls   │ │Active Teams  │ ║  │
+│               │  ║  └──────────────┘ └──────────────┘ └──────────────┘ ║  │
+│               │  ║                                                      ║  │
+│               │  ║  4-Week Cost Trend by Team (stacked bar)             ║  │
+│               │  ║  $50 ┤                       ████                   ║  │
+│               │  ║  $40 ┤              ████     ████                   ║  │
+│               │  ║  $30 ┤     ████     ████     ████                   ║  │
+│               │  ║  $20 ┤     ████     ████     ████                   ║  │
+│               │  ║       Nov 3   Nov 10   Nov 17   Nov 24              ║  │
+│               │  ║       ■ Eng  ■ HR  ■ Logistics  ■ C-Suite           ║  │
+│               │  ║                                                      ║  │
+│               │  ║  Department Breakdown (Last 7 Days)                 ║  │
+│               │  ║  Engineering   921   1.8M   $19.40   gpt-4o         ║  │
+│               │  ║  HR            612   1.1M   $10.90   claude-sonnet  ║  │
+│               │  ║  Logistics     421   0.7M    $6.22   gpt-4o-mini    ║  │
+│               │  ║  C-Suite       150   0.3M    $2.20   claude-opus    ║  │
+│               │  ╚═══════════════════════════════════════════════════════╝  │
+└───────────────┴─────────────────────────────────────────────────────────────┘
+  Browser Print → "Save as PDF" produces a clean A4 page  ·  Sidebar hidden
+```
+
+---
+
 ## Prerequisites
 
 - The **Enterprise AI Gateway** backend must be running and accessible
