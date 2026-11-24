@@ -1,0 +1,27 @@
+# ============================================================
+# .gitignore — Enterprise AI Monitor
+# ============================================================
+
+# --- Node / Frontend ---
+node_modules/
+dist/
+build/
+*.local
+
+# --- Environment & Secrets ---
+.env
+.env.local
+.env.production
+.env.staging
+
+# --- IDE ---
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log
+logs/

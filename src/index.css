@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Print styles — hide sidebar and controls when printing weekly report */
+  @media print {
+    aside, .print\:hidden { display: none !important; }
+    main { overflow: visible !important; }
+    body { background: white; }
+  }
+}
